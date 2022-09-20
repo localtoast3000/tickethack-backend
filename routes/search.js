@@ -4,8 +4,8 @@ import { format } from 'date-fns';
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  const { departure, arrival, date } = req.query;
-  if (departure && arrival && date) {
+  if (validateQuerys(req.query)) {
+    const { departure, arrival, date } = req.query;
     let trips;
     try {
       trips = await Trip.find({
@@ -25,6 +25,14 @@ router.get('/', async (req, res) => {
 
 function caseInsensitiveSearchString(searchString) {
   return new RegExp(`^${searchString}$`, 'i');
+}
+
+function validateQuerys({ departure, arrival, date }) {
+  const dateRegexp = /^([0-9]|[0-2][0-9]|(3)[0-1])(\/)(([0-9]|(0)[0-9])|((1)[0-2]))(\/)\d{4}$/g;
+  if (!departure && !arrival && !date) return false;
+  if (departure.length < 2 || arrival.length < 2) return false;
+  if (!dateRegexp.test(date)) return false;
+  return true;
 }
 
 export default router;
