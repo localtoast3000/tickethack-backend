@@ -12,11 +12,11 @@ import logger from 'morgan';
 import chalk from 'chalk';
 import helmet from 'helmet';
 import connectToDatbase from './db/mongo_db_connector.js';
+
+// ROUTER IMPORTS
 import searchRouter from './routes/search.js';
 import cartRouter from './routes/cart.js';
 import bookingsRouter from './routes/bookings.js';
-
-// ROUTER IMPORTS
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PORT = process.env.PORT || '8000';
