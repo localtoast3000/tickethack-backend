@@ -1,5 +1,5 @@
 import express from 'express';
-import SavedTrip from '../db/models/SavedTrip.js';
+import Item from '../db/models/Item.js';
 import Trip from '../db/models/Trip.js';
 import { validateTripIdInReqBody } from '../lib/helpers.js';
 const router = express.Router();
@@ -9,7 +9,7 @@ router.post('/addtrip', async (req, res) => {
     const { trip_id } = req.body;
     let foundTrip;
     try {
-      foundTrip = await SavedTrip.findOne({ trip_id });
+      foundTrip = await Item.findOne({ trip_id });
     } catch (err) {
       console.log(err);
       res.json({ result: false, error: 'Error with trip comparison' });
@@ -19,7 +19,7 @@ router.post('/addtrip', async (req, res) => {
     let result;
     try {
       if (!(await Trip.findById(trip_id))) return req.json({ result: false, error: 'Trip does not exsist' });
-      result = await SavedTrip({ trip_id, ...req.body }).save();
+      result = await Item({ trip_id, payed: false }).save();
     } catch (err) {
       console.log(err);
       res.json({ result: false, error: 'Failed to store trip' });
@@ -32,7 +32,7 @@ router.post('/addtrip', async (req, res) => {
 router.get('/trips', async (req, res) => {
   let trips;
   try {
-    trips = await SavedTrip.find().populate('trip_id');
+    trips = await Item.find().populate('trip_id');
   } catch (err) {
     console.log(err);
     return res.json({ result: false, error: 'Failed to get trips' });
@@ -45,7 +45,7 @@ router.get('/trips', async (req, res) => {
 router.delete('/removetrip', async (req, res) => {
   let status;
   try {
-    status = await SavedTrip.deleteOne({ trip_id: req.query.trip_id });
+    status = await Item.deleteOne({ trip_id: req.query.trip_id });
   } catch (err) {
     console.log(err);
     return res.json({ result: false, error: 'Failed to delete trip' });

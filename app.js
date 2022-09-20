@@ -14,6 +14,7 @@ import helmet from 'helmet';
 import connectToDatbase from './db/mongo_db_connector.js';
 import searchRouter from './routes/search.js';
 import cartRouter from './routes/cart.js';
+import bookingsRouter from './routes/bookings.js';
 
 // ROUTER IMPORTS
 
@@ -41,6 +42,7 @@ app.use(
 // ROUTERS
 app.use('/search', searchRouter);
 app.use('/cart', cartRouter);
+app.use('/bookings', bookingsRouter);
 
 // PORT LISTENER
 app.listen(PORT, () => {
