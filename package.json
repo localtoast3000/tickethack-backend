@@ -1,0 +1,31 @@
+{
+  "name": "tickethack-backend",
+  "version": "1.0.0",
+  "description": "Tickethack project La Capsule",
+  "main": "app.js",
+  "author": "Craig Chick",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MRcraigchick/tickethack-backend.git"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "watch": "nodemon -e * app.js"
+  },
+  "dependencies": {
+    "chalk": "^5.0.1",
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "debug": "^4.3.4",
+    "dotenv": "^16.0.2",
+    "express": "^4.18.1",
+    "helmet": "^6.0.0",
+    "mongoose": "^6.6.1",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
