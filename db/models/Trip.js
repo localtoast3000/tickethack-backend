@@ -1,8 +1,11 @@
 import mongoose from 'mongoose';
 
 export default mongoose.model(
-  'years',
+  'trips',
   mongoose.Schema({
-    year: String,
+    departure: String,
+    arrival: String,
+    date: Date,
+    price: Number,
   })
 );
