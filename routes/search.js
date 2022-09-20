@@ -4,6 +4,13 @@ import { format } from 'date-fns';
 import { caseInsensitiveSearchString, validateSearchTripReqQuery } from '../lib/helpers.js';
 const router = express.Router();
 
+// GET: All trips matching the search query
+//
+// Accepts querys:
+//    departure : String city name
+//    arrival   : String city name
+//    date      : DateString format 'dd/MM/yyyy'
+
 router.get('/', async (req, res) => {
   if (validateSearchTripReqQuery(req.query)) {
     const { departure, arrival, date } = req.query;

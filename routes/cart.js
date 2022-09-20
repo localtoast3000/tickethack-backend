@@ -5,6 +5,12 @@ import Booking from '../db/models/Booking.js';
 import { validateTripIdInReqBody } from '../lib/helpers.js';
 const router = express.Router();
 
+// All items are stored as a reference to the original data in the "trips" collection
+// not the data itself
+
+// POST: Adds a new "Item" (trip) to the "cart" collection
+// Takes the "id" of the trip to be stored in "cart"
+
 router.post('/addtrip', async (req, res) => {
   if (validateTripIdInReqBody(req.body)) {
     const { trip_id } = req.body;
@@ -30,6 +36,8 @@ router.post('/addtrip', async (req, res) => {
   } else res.json({ result: false, error: 'Invalid trip ID' });
 });
 
+// GET: All items stored in "cart"
+
 router.get('/trips', async (req, res) => {
   let trips;
   try {
@@ -42,6 +50,10 @@ router.get('/trips', async (req, res) => {
     ? res.json({ result: true, trips: trips.map(({ trip_id }) => trip_id) })
     : res.json({ result: false, error: 'Failed to get trips' });
 });
+
+// POST: Updates the "payed" status to "true" of the items in the "cart"
+// Sends all payed items to the "bookings" collection
+// then removes all items from the "cart" which are now stored in "bookings"
 
 router.post('/paytrips', async (req, res) => {
   let status;
@@ -75,6 +87,8 @@ router.post('/paytrips', async (req, res) => {
     res.json({ result: true, message: 'All payed trips transfered to bookings' });
   } else res.json({ result: false, error: 'Trips not found' });
 });
+
+// DELETE: Removes an "item" from "cart"
 
 router.delete('/removetrip', async (req, res) => {
   if (validateTripIdInReqBody(req.query.trip_id)) {

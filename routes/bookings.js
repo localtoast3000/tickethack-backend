@@ -2,6 +2,11 @@ import express from 'express';
 import Booking from '../db/models/Booking.js';
 const router = express.Router();
 
+// All bookings are stored as a reference to the original data in the "trips" collection
+// not the data itself
+
+// GET: All trips stored in bookings
+
 router.get('/', async (req, res) => {
   let bookings;
   try {
