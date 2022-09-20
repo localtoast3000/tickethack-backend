@@ -48,7 +48,7 @@ router.get('/trips', async (req, res) => {
   }
   trips.length > 0
     ? res.json({ result: true, trips: trips.map(({ trip_id }) => trip_id) })
-    : res.json({ result: false, error: 'Failed to get trips' });
+    : res.json({ result: false, error: 'No trips' });
 });
 
 // POST: Updates the "payed" status to "true" of the items in the "cart"
@@ -85,7 +85,7 @@ router.post('/paytrips', async (req, res) => {
       res.json({ result: false, error: 'Failed to transfer all payed trips to bookings' });
     }
     res.json({ result: true, message: 'All payed trips transfered to bookings' });
-  } else res.json({ result: false, error: 'Trips not found' });
+  } else res.json({ result: false, error: 'No trips' });
 });
 
 // DELETE: Removes an "item" from "cart"

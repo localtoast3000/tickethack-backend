@@ -27,7 +27,7 @@ router.get('/', async (req, res) => {
     const foundDates = trips.filter((trip) => format(new Date(trip.date), 'dd/MM/yyyy') === date);
     foundDates.length > 0
       ? res.json({ result: true, trips: foundDates })
-      : res.json({ result: false, error: 'No trips found for given date' });
+      : res.json({ result: false, error: 'No trips available on these dates' });
   } else res.json({ result: false, error: 'Invalid search query' });
 });
 

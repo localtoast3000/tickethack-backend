@@ -17,7 +17,7 @@ router.get('/', async (req, res) => {
   }
   bookings.length > 0
     ? res.json({ result: true, bookings: bookings.map(({ trip_id }) => trip_id) })
-    : res.json({ result: false, error: 'Failed to get bookings' });
+    : res.json({ result: false, error: 'No bookings' });
 });
 
 export default router;
