@@ -13,6 +13,7 @@ import chalk from 'chalk';
 import helmet from 'helmet';
 import connectToDatbase from './db/mongo_db_connector.js';
 import searchRouter from './routes/search.js';
+import cartRouter from './routes/cart.js';
 
 // ROUTER IMPORTS
 
@@ -39,6 +40,7 @@ app.use(
 
 // ROUTERS
 app.use('/search', searchRouter);
+app.use('/cart', cartRouter);
 
 // PORT LISTENER
 app.listen(PORT, () => {

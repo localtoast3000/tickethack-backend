@@ -1,10 +1,11 @@
 import express from 'express';
 import Trip from '../db/models/Trip.js';
 import { format } from 'date-fns';
+import { caseInsensitiveSearchString, validateSearchTripReqQuery } from '../lib/helpers.js';
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  if (validateQuerys(req.query)) {
+  if (validateSearchTripReqQuery(req.query)) {
     const { departure, arrival, date } = req.query;
     let trips;
     try {
@@ -22,17 +23,5 @@ router.get('/', async (req, res) => {
       : res.json({ result: false, error: 'No trips found for given date' });
   } else res.json({ result: false, error: 'Invalid search query' });
 });
-
-function caseInsensitiveSearchString(searchString) {
-  return new RegExp(`^${searchString}$`, 'i');
-}
-
-function validateQuerys({ departure, arrival, date }) {
-  const dateRegexp = /^([0-9]|[0-2][0-9]|(3)[0-1])(\/)(([0-9]|(0)[0-9])|((1)[0-2]))(\/)\d{4}$/g;
-  if (!departure && !arrival && !date) return false;
-  if (departure.length < 2 || arrival.length < 2) return false;
-  if (!dateRegexp.test(date)) return false;
-  return true;
-}
 
 export default router;
