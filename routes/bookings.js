@@ -20,4 +20,17 @@ router.get('/', async (req, res) => {
     : res.json({ result: false, error: 'No bookings' });
 });
 
+router.delete('/remove', async (req, res) => {
+  let status;
+  try {
+    status = await Booking.deleteOne({ trip_id: req.query.trip_id });
+  } catch (err) {
+    console.log(err);
+    return res.json({ result: false, error: 'Failed to delete booking' });
+  }
+  status.deletedCount > 0
+    ? res.json({ result: true, message: 'Booking removed' })
+    : res.json({ result: false, error: 'No bookings' });
+});
+
 export default router;
