@@ -31,4 +31,15 @@ router.get('/', async (req, res) => {
   } else res.json({ result: false, error: 'Invalid search query' });
 });
 
+router.get('/all', async (req, res) => {
+  let trips;
+  try {
+    trips = await Trip.find();
+  } catch {
+    res.json({ result: false, error: 'Error with trip search' });
+    return;
+  }
+  trips.length > 0 ? res.json({ result: true, trips }) : res.json({ result: false, error: 'No trips' });
+});
+
 export default router;
