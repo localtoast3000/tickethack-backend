@@ -1,5 +1,6 @@
 import express from 'express';
 import Booking from '../db/models/Booking.js';
+import { validateTripIdInReqBody } from '../lib/helpers.js';
 const router = express.Router();
 
 // All bookings are stored as a reference to the original data in the "trips" collection
@@ -21,16 +22,18 @@ router.get('/', async (req, res) => {
 });
 
 router.delete('/remove', async (req, res) => {
-  let status;
-  try {
-    status = await Booking.deleteOne({ trip_id: req.query.trip_id });
-  } catch (err) {
-    console.log(err);
-    return res.json({ result: false, error: 'Failed to delete booking' });
-  }
-  status.deletedCount > 0
-    ? res.json({ result: true, message: 'Booking removed' })
-    : res.json({ result: false, error: 'No bookings' });
+  if (validateTripIdInReqBody(req.query)) {
+    let status;
+    try {
+      status = await Booking.deleteOne({ trip_id: req.query.trip_id });
+    } catch (err) {
+      console.log(err);
+      return res.json({ result: false, error: 'Failed to delete booking' });
+    }
+    status.deletedCount > 0
+      ? res.json({ result: true, message: 'Booking removed' })
+      : res.json({ result: false, error: 'No bookings' });
+  } else res.json({ result: false, error: 'Invalid trip ID' });
 });
 
 export default router;
